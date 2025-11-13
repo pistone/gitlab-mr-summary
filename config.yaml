@@ -1,0 +1,54 @@
+---
+# GitLab Code Review Analysis Configuration
+
+# GitLab connection settings
+gitlab:
+  url: "https://gitlab.com"  # Your GitLab instance URL
+  token: "YOUR_GITLAB_TOKEN"  # Personal access token with api scope
+  project_id: "your-project-id"  # Project ID or path (e.g., "group/project")
+
+# Users whose merge requests to analyze
+target_users:
+  - "john.doe"
+  - "jane.smith"
+  - "dev.user"
+
+# LLM Configuration for enhanced analysis
+llm:
+  enabled: true  # Set to false to use basic keyword-based analysis
+  provider: "claude"  # Options: "claude" or "openai"
+  
+  # Claude API settings
+  claude:
+    api_key: "YOUR_ANTHROPIC_API_KEY"
+    model: "claude-sonnet-4-20250514"  # or claude-opus-4-20250514 for deeper analysis
+    max_tokens: 2000
+  
+  # OpenAI API settings
+  openai:
+    api_key: "YOUR_OPENAI_API_KEY"
+    model: "gpt-4o"  # or gpt-4o-mini for faster/cheaper analysis
+    max_tokens: 2000
+  
+  # LLM Analysis Features
+  features:
+    semantic_categorization: true  # Use LLM to understand comment intent
+    pattern_extraction: true  # Extract abstract patterns from similar feedback
+    best_practices_generation: true  # Generate best practice docs
+    sentiment_analysis: true  # Analyze tone and helpfulness
+    code_context_analysis: false  # Analyze code changes (requires more tokens)
+  
+  # Batch processing settings
+  batch_size: 10  # Number of comments to process in parallel
+  rate_limit_delay: 0.5  # Seconds to wait between API calls
+
+# Analysis settings (optional - will add more features later)
+analysis:
+  date_range:
+    start: "2024-01-01"  # Optional: start date (YYYY-MM-DD)
+    end: null  # Optional: end date (null = today)
+  
+  # Filter settings
+  filters:
+    state: "merged"  # all, merged, opened, closed
+    min_comments: 1  # Minimum number of comments to include MR
